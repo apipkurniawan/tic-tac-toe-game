@@ -1,14 +1,18 @@
 import { useState } from 'react';
 
-function Player({ initialName, symbol, isActive }) {
+function Player({ initialName, symbol, isActive, onChangeName }) {
   const [isEditing, setIsEditing] = useState(false);
   const [playerName, setPlayerName] = useState(initialName);
 
   function handleClick() {
     setIsEditing((editing) => !editing);
+
+    if (isEditing) {
+      onChangeName(symbol, playerName);
+    }
   }
 
-  function onChangeName(event) {
+  function handleChange(event) {
     setPlayerName(event.target.value);
   }
 
@@ -16,7 +20,7 @@ function Player({ initialName, symbol, isActive }) {
 
   if (isEditing) {
     player = (
-      <input type='text' value={playerName} onChange={onChangeName} required />
+      <input type='text' value={playerName} onChange={handleChange} required />
     );
   }
 
